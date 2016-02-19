@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Orhan Tuncer">
+    <title>Displaying Hierarchical Data in a Grid (WPF) - Orhan Tuncer</title>
+    <meta name="author" content="Orhan Tuncer">
+    
+    
+        <link rel="icon" href="http://orhtun.github.io/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="I stumbled upon a question on StackOverflow. The essence of the question was binding a hierarchical data to a grid component. I found this question interesting and did a quick search. There were many">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Displaying Hierarchical Data in a Grid (WPF)">
+<meta property="og:url" content="http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/index.html">
+<meta property="og:site_name" content="Orhan Tuncer">
+<meta property="og:description" content="I stumbled upon a question on StackOverflow. The essence of the question was binding a hierarchical data to a grid component. I found this question interesting and did a quick search. There were many">
+<meta property="og:image" content="http://orhtun.github.io/GridLikeViewWithDynamicColumns02.png">
+<meta property="og:image" content="http://orhtun.github.io/GridLikeViewWithDynamicColumns03.png">
+<meta property="og:image" content="http://orhtun.github.io/GridLikeViewWithDynamicColumns04.png">
+<meta property="og:updated_time" content="2016-02-18T21:31:02.787Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Displaying Hierarchical Data in a Grid (WPF)">
+<meta name="twitter:description" content="I stumbled upon a question on StackOverflow. The essence of the question was binding a hierarchical data to a grid component. I found this question interesting and did a quick search. There were many">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://orhtun.github.io/images/badge.png"/>
+    
+    
+        <meta property="og:image" content="http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/grid-786084_1920.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/grid-786084_1920.jpg" />
+    
+    
+    
+        
+            <meta property="og:image" content="http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns02.png" />
+            <meta class="swiftype" name="image" data-type="enum" content="http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns02.png" />
+        
+            <meta property="og:image" content="http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns03.png" />
+            <meta class="swiftype" name="image" data-type="enum" content="http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns03.png" />
+        
+            <meta property="og:image" content="http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns04.png" />
+            <meta class="swiftype" name="image" data-type="enum" content="http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns04.png" />
+        
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-ejlztp1tasruqfvoz6xmgqng0anzae8ox7cqjj5yibieqgcmhe9fwxfae6zj.min.css" type="text/css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">Orhan Tuncer</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="/#about">
+        
+        
+            <img class="header-picture" src="/images/badge.png"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/images/badge.png"/>
+            </a>
+            <span class="sidebar-profile-name">Orhan Tuncer</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">Home</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">Categories</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">Tags</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">Archives</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">About</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/orhtun" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://stackoverflow.com/users/5915664/orhan-tuncer" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+                    <span class="sidebar-button-desc">Stack Overflow</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Displaying Hierarchical Data in a Grid (WPF)
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" content="Wed Feb 10 2016 00:00:00 GMT+0200">
+	
+		    Feb 10, 2016
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/NET/">.NET</a>, <a class="category-link" href="/categories/NET/WPF/">.WPF</a>
+
+
+    
+</div>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>I stumbled upon a question on StackOverflow. The essence of the question was binding a hierarchical data to a grid component. I found this question interesting and did a quick search. There were many examples on how to display hierarchical data in trees or nested grids but I did not found an example on putting it in a single grid. So I decided to create mine.</p>
+<a id="more"></a>
+<p>I decided to up the difficulty by not writing any custom code in pages or windows and keep everything in MVVM+XAML way. I started by creating a sample hierarchical data parallel to the question. There are sellers and these sellers have items in their stocks. For simplicity I selected primary keys for both suppliers and items to be their names. Items naturally have different prices in different suppliers and these should be editable. To up the challenge a little further let’s assume not all the suppliers have the same items. So;</p>
+<p>Supplier1: Item1,Item2,Item3<br>Supplier2: Item2,Item3<br>Supplier3: Item1,Item3,Item4</p>
+<p>The question stated that new suppliers to be added on runtime.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SupplierViewModel</span> : <span class="title">ViewModelBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">string</span> _name;</span><br><span class="line">    <span class="keyword">private</span> ObservableCollection&lt;ItemViewModel&gt; _items = <span class="keyword">new</span> ObservableCollection&lt;ItemViewModel&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ObservableCollection&lt;ItemViewModel&gt; Items</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _items; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _name; &#125;</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        &#123;</span><br><span class="line">            _name = <span class="keyword">value</span>;</span><br><span class="line">            RaisePropertyChanged();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SupplierViewModel</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ItemViewModel</span> : <span class="title">ViewModelBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">string</span> _name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> _cost;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _name; &#125;</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        &#123;</span><br><span class="line">            _name = <span class="keyword">value</span>;</span><br><span class="line">            RaisePropertyChanged();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Cost</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _cost; &#125;</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        &#123;</span><br><span class="line">            _cost = <span class="keyword">value</span>;</span><br><span class="line">            RaisePropertyChanged();</span><br><span class="line">            Messenger.Default.Send(<span class="keyword">new</span> ItemCostUpdatedMessage());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The next thing is to keep list of suppliers. We want this list to be a singleton and easily accessible. So I used MVVM Light Toolkit which has a handy Locator class. I decided to create random data to experiment. Of course normally this is not the way to go, you want well defined mocks for unit testing.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SupplierListViewModel</span> : <span class="title">ViewModelBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> ObservableCollection&lt;SupplierViewModel&gt; Suppliers</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _suppliers; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> RelayCommand InsertSupplierCommand &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ObservableCollection&lt;SupplierViewModel&gt; _suppliers = <span class="keyword">new</span> ObservableCollection&lt;SupplierViewModel&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SupplierListViewModel</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        InsertSupplierCommand = <span class="keyword">new</span> RelayCommand(InsertSupplierCommandExecute, InsertSupplierCommandCanExecute);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">bool</span> <span class="title">InsertSupplierCommandCanExecute</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertSupplierCommandExecute</span>(<span class="params"></span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> supplier = <span class="keyword">new</span> SupplierViewModel() &#123;Name = $<span class="string">"Supplier &#123;Suppliers.Count + 1&#125;"</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> r = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> itemCnt = r.Next(<span class="number">5</span>, <span class="number">10</span>);</span><br><span class="line">        <span class="keyword">var</span> testSkipItem = r.Next(<span class="number">1</span>, itemCnt);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= itemCnt; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (j == testSkipItem)</span><br><span class="line"></span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> item = <span class="keyword">new</span> ItemViewModel() &#123; Name = $<span class="string">"Item &#123;j&#125;"</span>, Cost = r.Next(<span class="number">1</span>, <span class="number">100</span>) &#125;;</span><br><span class="line"></span><br><span class="line">            supplier.Items.Add(item);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Suppliers.Add(supplier);</span><br><span class="line">        Messenger.Default.Send(<span class="keyword">new</span> SupplierAddedMessage());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Now we have our data ready. Turning back to our previous example what we need to do now is to show this data in a grid.</p>
+<p>Supplier1: Item1,Item2,Item3<br>Supplier2: Item2,Item3<br>Supplier3: Item1,Item3,Item4</p>
+<p> into</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Supplier1</th>
+<th>Supplier2</th>
+<th>Supplier3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Item1</td>
+<td>50</td>
+<td></td>
+<td>48</td>
+</tr>
+<tr>
+<td>Item2</td>
+<td>10</td>
+<td>11</td>
+<td></td>
+</tr>
+<tr>
+<td>Item3</td>
+<td>20</td>
+<td>9</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Item4</td>
+<td></td>
+<td></td>
+<td>40</td>
+</tr>
+</tbody>
+</table>
+<p>The next problem is representing the empty slots in the grid. A supplier does not know what other suppliers have in their inventories. One way to solve this problem is, to pass the supplier a list of all possible item names and ask for it to return a list of items where the missing item slots simply left blank. Then we can select the proper data templates in XAML for these items. A textbox to edit the price and an empty cell for the missing item. But blanks are harder to create data triggers on and I preferred to rely on data types. So I created a class ItemViewModelFake: ItemViewModel just to give it a different data type.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ItemViewModelFake</span> : <span class="title">ItemViewModel</span></span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In WPF you can’t pass data to a binding property. One way to overcome this problem is to use converters. But since the task here is very simple I relied on the Locater and pulled the data from the view model.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;ItemViewModel&gt; ItemsForGrid</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//This calculation can be moved outside for better performance, do only when items change</span></span><br><span class="line">        <span class="keyword">var</span> mainViewModel = ServiceLocator.Current.GetInstance&lt;MainViewModel&gt;();</span><br><span class="line">        <span class="keyword">var</span> distinctItemNames = mainViewModel.DistinctItemNames;</span><br><span class="line"></span><br><span class="line">        List&lt;ItemViewModel&gt; itemsForGrid = <span class="keyword">new</span> List&lt;ItemViewModel&gt;();</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> name <span class="keyword">in</span> distinctItemNames)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> item = Items.FirstOrDefault(p =&gt; p.Name.Equals(name));</span><br><span class="line">            itemsForGrid.Add(item ?? <span class="keyword">new</span> ItemViewModelFake() &#123; Name = <span class="string">""</span> &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> itemsForGrid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The order of items is handled by the MainViewModel and the supplier class respects this order. Now we can select the proper templates in XAML;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ItemsControl</span> <span class="attribute">ItemsSource</span>=<span class="value">"&#123;Binding ItemsForGrid&#125;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">ItemsControl.Resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">DataTemplate</span> <span class="attribute">DataType</span>=<span class="value">"&#123;x:Type viewModel:ItemViewModelFake&#125;"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">Grid</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">Grid.RowDefinitions</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">RowDefinition</span> <span class="attribute">SharedSizeGroup</span>=<span class="value">"ItemRow"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">Grid.RowDefinitions</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="title">TextBlock</span> <span class="attribute">Grid.Row</span>=<span class="value">"0"</span> <span class="attribute">Text</span>=<span class="value">"&#123;Binding Name&#125;"</span> <span class="attribute">Foreground</span>=<span class="value">"Blue"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">Grid</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">DataTemplate</span> <span class="attribute">DataType</span>=<span class="value">"&#123;x:Type viewModel:ItemViewModel&#125;"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">Grid</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">Grid.RowDefinitions</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">RowDefinition</span> <span class="attribute">SharedSizeGroup</span>=<span class="value">"ItemRow"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">Grid.RowDefinitions</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="title">TextBox</span> <span class="attribute">Grid.Row</span>=<span class="value">"0"</span></span><br><span class="line">                         <span class="attribute">Text</span>=<span class="value">"&#123;Binding Cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged&#125;"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">Grid</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">ItemsControl.Resources</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ItemsControl</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>To create a proper grid, we need row and column headers. We have all the real suppliers, but to create the rowheader column where we display the distinct item names, we need a new supplier which has all the items.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;SupplierViewModel&gt; SuppliersForGrid</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//This calculation can be moved outside for better performance, do only when items change</span></span><br><span class="line">        <span class="keyword">var</span> supplierList = ServiceLocator.Current.GetInstance&lt;SupplierListViewModel&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> suppliers = <span class="keyword">new</span> List&lt;SupplierViewModel&gt;();</span><br><span class="line">        <span class="keyword">var</span> rowHeaderSupplierVM = <span class="keyword">new</span> SupplierViewModel &#123;Name = <span class="string">""</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> itemName <span class="keyword">in</span> DistinctItemNames)</span><br><span class="line">        &#123;</span><br><span class="line">            rowHeaderSupplierVM.Items.Add(<span class="keyword">new</span> ItemViewModelFake() &#123; Name = itemName &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        suppliers.Add(rowHeaderSupplierVM);</span><br><span class="line">        suppliers.AddRange(supplierList.Suppliers);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> suppliers;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> List&lt;<span class="keyword">string</span>&gt; DistinctItemNames</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//This calculation can be moved outside for better performance, do only when items change</span></span><br><span class="line">        <span class="keyword">var</span> supplierList = ServiceLocator.Current.GetInstance&lt;SupplierListViewModel&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> distinctItemNames =</span><br><span class="line">            supplierList.Suppliers.SelectMany(p =&gt; p.Items).Select(t =&gt; t.Name).Distinct().ToList();</span><br><span class="line">        distinctItemNames.Sort();</span><br><span class="line">        <span class="keyword">return</span> distinctItemNames;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The hard work is done. Now we need to display this data in a grid like manner. Since we still do not have a tabular data we can’t use a regular datagrid. But we can mimic one with the help of UniformGrid and ItemsControl. The complete XAML now looks like this;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">Grid</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">StackPanel</span> <span class="attribute">Orientation</span>=<span class="value">"Horizontal"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">ItemsControl</span> <span class="attribute">Margin</span>=<span class="value">"20,10,20,10"</span></span><br><span class="line">                      <span class="attribute">ItemsSource</span>=<span class="value">"&#123;Binding Main.SuppliersForGrid, Source=&#123;StaticResource Locator&#125;&#125;"</span></span><br><span class="line">                      <span class="attribute">HorizontalAlignment</span>=<span class="value">"Left"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="title">ItemsControl.ItemsPanel</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">ItemsPanelTemplate</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">UniformGrid</span> <span class="attribute">Columns</span>=<span class="value">"&#123;Binding  Main.SuppliersForGrid.Count, Source=&#123;StaticResource Locator&#125;&#125;"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">ItemsPanelTemplate</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">ItemsControl.ItemsPanel</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="title">ItemsControl.ItemTemplate</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                    <span class="tag">&lt;<span class="title">StackPanel</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="title">TextBlock</span> <span class="attribute">Text</span>=<span class="value">"&#123;Binding Name&#125;"</span> /&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="title">ItemsControl</span> <span class="attribute">ItemsSource</span>=<span class="value">"&#123;Binding ItemsForGrid&#125;"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="title">ItemsControl.ItemTemplate</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="title">TextBlock</span> <span class="attribute">Text</span>=<span class="value">"&#123;Binding Name&#125;"</span> /&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="title">ItemsControl.ItemTemplate</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="title">ItemsControl</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="title">StackPanel</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">ItemsControl.ItemTemplate</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">ItemsControl</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">ItemsControl</span> <span class="attribute">Margin</span>=<span class="value">"20,10,20,10"</span></span><br><span class="line">                      <span class="attribute">ItemsSource</span>=<span class="value">"&#123;Binding Main.SuppliersForGrid, Source=&#123;StaticResource Locator&#125;&#125;"</span></span><br><span class="line">                      <span class="attribute">HorizontalAlignment</span>=<span class="value">"Left"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="title">ItemsControl.ItemsPanel</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">ItemsPanelTemplate</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">UniformGrid</span> <span class="attribute">Grid.IsSharedSizeScope</span>=<span class="value">"True"</span></span><br><span class="line">                                 <span class="attribute">Columns</span>=<span class="value">"&#123;Binding  Main.SuppliersForGrid.Count, Source=&#123;StaticResource Locator&#125;&#125;"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">ItemsPanelTemplate</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">ItemsControl.ItemsPanel</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="title">ItemsControl.ItemTemplate</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                    <span class="tag">&lt;<span class="title">StackPanel</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="title">TextBlock</span> <span class="attribute">Text</span>=<span class="value">"&#123;Binding Name&#125;"</span> <span class="attribute">Margin</span>=<span class="value">"5,5,5,5"</span> <span class="attribute">Foreground</span>=<span class="value">"Red"</span> /&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="title">ItemsControl</span> <span class="attribute">ItemsSource</span>=<span class="value">"&#123;Binding ItemsForGrid&#125;"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="title">ItemsControl.Resources</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="title">DataTemplate</span> <span class="attribute">DataType</span>=<span class="value">"&#123;x:Type viewModel:ItemViewModelFake&#125;"</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="title">Grid</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="title">Grid.RowDefinitions</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="title">RowDefinition</span> <span class="attribute">SharedSizeGroup</span>=<span class="value">"ItemRow"</span> /&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;/<span class="title">Grid.RowDefinitions</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                                        <span class="tag">&lt;<span class="title">TextBlock</span> <span class="attribute">Grid.Row</span>=<span class="value">"0"</span> <span class="attribute">Text</span>=<span class="value">"&#123;Binding Name&#125;"</span> <span class="attribute">Foreground</span>=<span class="value">"Blue"</span> /&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;/<span class="title">Grid</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="title">DataTemplate</span> <span class="attribute">DataType</span>=<span class="value">"&#123;x:Type viewModel:ItemViewModel&#125;"</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="title">Grid</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="title">Grid.RowDefinitions</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="title">RowDefinition</span> <span class="attribute">SharedSizeGroup</span>=<span class="value">"ItemRow"</span> /&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;/<span class="title">Grid.RowDefinitions</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                                        <span class="tag">&lt;<span class="title">TextBox</span> <span class="attribute">Grid.Row</span>=<span class="value">"0"</span></span><br><span class="line">                                                 <span class="attribute">Text</span>=<span class="value">"&#123;Binding Cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged&#125;"</span> /&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;/<span class="title">Grid</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="title">ItemsControl.Resources</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="title">ItemsControl</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                        <span class="tag">&lt;<span class="title">TextBlock</span> <span class="attribute">Text</span>=<span class="value">"&#123;Binding ItemsTotalCost&#125;"</span> <span class="attribute">Margin</span>=<span class="value">"5,5,5,5"</span> <span class="attribute">Foreground</span>=<span class="value">"Green"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="title">TextBlock.Style</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="title">Style</span> <span class="attribute">TargetType</span>=<span class="value">"&#123;x:Type TextBlock&#125;"</span>&gt;</span><span class="css"></span><br><span class="line">                                    &lt;<span class="tag">Style</span><span class="class">.Triggers</span>&gt;</span><br><span class="line">                                        &lt;<span class="tag">Trigger</span> <span class="tag">Property</span>="<span class="tag">Text</span>" <span class="tag">Value</span>="0"&gt;</span><br><span class="line">                                            &lt;<span class="tag">Setter</span> <span class="tag">Property</span>="<span class="tag">Visibility</span>" <span class="tag">Value</span>="<span class="tag">Hidden</span>" /&gt;</span><br><span class="line">                                        &lt;/<span class="tag">Trigger</span>&gt;</span><br><span class="line">                                    &lt;/<span class="tag">Style</span><span class="class">.Triggers</span>&gt;</span><br><span class="line">                                </span><span class="tag">&lt;/<span class="title">Style</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="title">TextBlock.Style</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="title">TextBlock</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="title">StackPanel</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="title">DataTemplate</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">ItemsControl.ItemTemplate</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">ItemsControl</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">Button</span> <span class="attribute">Margin</span>=<span class="value">"5,30,5,30"</span> <span class="attribute">Command</span>=<span class="value">"&#123;Binding SupplierListVM.InsertSupplierCommand, Source=&#123;StaticResource Locator&#125;&#125;"</span> &gt;</span>Add Supplier<span class="tag">&lt;/<span class="title">Button</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="title">StackPanel</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Grid</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>One last thing to do is to handle the creation of suppliers. Our view uses a custom list of suppliers and items. Therefor we need to call the RaisePropertyChanged() events manually. But since event handling and list creation is done in different view models, we need a method to pass the required messages between them. Luckily MVVM Light offers such a mechanism.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertSupplierCommandExecute</span>(<span class="params"></span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> supplier = <span class="keyword">new</span> SupplierViewModel() &#123;Name = $<span class="string">"Supplier &#123;Suppliers.Count + 1&#125;"</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">    Suppliers.Add(supplier);</span><br><span class="line">    Messenger.Default.Send(<span class="keyword">new</span> SupplierAddedMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MainViewModel</span>(<span class="params"></span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    GenerateTestData();</span><br><span class="line"></span><br><span class="line">    Messenger.Default.Register&lt;SupplierAddedMessage&gt;(</span><br><span class="line">      <span class="keyword">this</span>,</span><br><span class="line">      m =&gt; RaisePropertyChanged(<span class="string">"SuppliersForGrid"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>We are done! The final screenshots are below. You may check the complete solution on <a href="https://github.com/orhtun/GridLikeViewWithDynamicColumns" target="_blank" rel="external">GitHub</a>. This is a basic proof of concept with lots of room for improvement. Like scrolling and sorting the grid etc. I will try to convert this code to use a DataGrid later on.</p>
+<blockquote>
+</blockquote>
+
+            
+                
+
+    
+    
+        
+    
+    <div class="image-gallery">
+        <div class="image-gallery-metabar">
+            <span>Gallery : 3 images</span>
+        </div>
+        <div class="image-gallery-photos image-gallery-photos--thumbnail">
+            
+                    
+                    
+                    
+                
+                    
+                
+                <div class="photo-box">
+                    <a class="photo-box-inner fancybox" rel="fancybox-thumb" data-fancybox-group="gallery-undefined" title="" href="/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns02.png">
+                        <img class="photo" src="/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns02.png" itemprop="image">
+                    </a>
+                </div>
+            
+                    
+                    
+                    
+                
+                    
+                
+                <div class="photo-box">
+                    <a class="photo-box-inner fancybox" rel="fancybox-thumb" data-fancybox-group="gallery-undefined" title="" href="/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns03.png">
+                        <img class="photo" src="/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns03.png" itemprop="image">
+                    </a>
+                </div>
+            
+                    
+                    
+                    
+                
+                    
+                
+                <div class="photo-box">
+                    <a class="photo-box-inner fancybox" rel="fancybox-thumb" data-fancybox-group="gallery-undefined" title="" href="/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns04.png">
+                        <img class="photo" src="/2016/02/10/display-hierarchical-data-in-grid/GridLikeViewWithDynamicColumns04.png" itemprop="image">
+                    </a>
+                </div>
+            
+        </div>
+    </div>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Grid/">Grid</a> <a class="tag tag--primary tag--small t-link" href="/tags/XAML/">XAML</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/02/05/catch-unclosed-sql-connections-net/" data-tooltip="One way to catch unclosed SQL connections in .NET">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2016 Orhan Tuncer. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/02/05/catch-unclosed-sql-connections-net/" data-tooltip="One way to catch unclosed SQL connections in .NET">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/">
+                <i class="fa fa-google-plus"></i><span class="">Share on Google Plus</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/">
+                <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://orhtun.github.io/2016/02/10/display-hierarchical-data-in-grid/">
+                <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/images/badge.png"/>
+        
+            <h4 id="about-card-name">Orhan Tuncer</h4>
+        
+            <h5 id="about-card-bio"><p>If you are not refactoring, you are over-engineering.</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Architect</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Ankara/Turkey
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/images/blog-bg.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/scrip-gfmrkxcl0qohe3cfdgxhzvc0yrceqta8i4iix0txvn8q4o2adlqd5n0jmkvt.min.js" type="text/javascript"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>
